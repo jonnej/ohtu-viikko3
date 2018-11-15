@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Kurssistatistiikka.iml" filepath="$PROJECT_DIR$/Kurssistatistiikka.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Kurssistatistiikka_main.iml" filepath="$PROJECT_DIR$/.idea/modules/Kurssistatistiikka_main.iml" group="Kurssistatistiikka" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Kurssistatistiikka_test.iml" filepath="$PROJECT_DIR$/.idea/modules/Kurssistatistiikka_test.iml" group="Kurssistatistiikka" />
+    </modules>
+  </component>
+</project>
