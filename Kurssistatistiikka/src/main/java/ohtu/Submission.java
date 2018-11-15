@@ -50,6 +50,11 @@ public class Submission {
         return print;
     }
 
+    public String print(int totalExerciseCount) {
+        return "tehtyjä tehtäviä yhteensä " + exercises.length + "/" + totalExerciseCount + " aikaa kului " + hours
+                + " tehdyt tehtävät:" + printExercises();
+    }
+
     @Override
     public String toString() {
         return course + ", viikko " + week + " tehtyjä tehtäviä yhteensä " + exercises.length + " aikaa kului " + hours
