@@ -2,7 +2,8 @@ package ohtu;
 
 import com.google.gson.Gson;
 import java.io.IOException;
-import java.util.Arrays;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import org.apache.http.client.fluent.Request;
 
@@ -26,6 +27,19 @@ public class Main {
         String coursesText = Request.Get(coursesUrl).execute().returnContent().asString();
         Course[] courses = mapper.fromJson(coursesText, Course[].class);
 
+        String ohtuStatsUrl = "https://studies.cs.helsinki.fi/courses/ohtu2018/stats";
+        String ohtuBodyText = Request.Get(ohtuStatsUrl).execute().returnContent().asString();
+        JsonParser parser = new JsonParser();
+
+        JsonObject json = parser.parse(ohtuBodyText).getAsJsonObject();
+
+        int submissionsTotal = 0;
+        int exercisesTotal = 0;
+        int hours = 0;
+        for (String key : json.keySet()) {
+            submissionsTotal += json.get(key).getAsJsonObject().get("students").getAsInt();
+            exercisesTotal += json.get(key).getAsJsonObject().get("exercise_total").getAsInt();
+        }
         System.out.println("opiskelijanumero: " + studentNr + "\n");
 
         for (Course course : courses) {

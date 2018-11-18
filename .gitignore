@@ -2,3 +2,5 @@ Kurssistatistiikka/.idea
 Kurssistatistiikka/build/
 .gradle/
 Kurssistatistiikka/.gradle/
+/Kurssistatistiikka/.nb-gradle/
+/HelloCucumber/build/
