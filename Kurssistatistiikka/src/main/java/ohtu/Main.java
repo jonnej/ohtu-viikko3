@@ -27,11 +27,28 @@ public class Main {
         String coursesText = Request.Get(coursesUrl).execute().returnContent().asString();
         Course[] courses = mapper.fromJson(coursesText, Course[].class);
 
-        String ohtuStatsUrl = "https://studies.cs.helsinki.fi/courses/ohtu2018/stats";
+
+        System.out.println("opiskelijanumero: " + studentNr + "\n");
+
+        for (Course course : courses) {
+            printCourse(subs, course);
+            if (course.getName().equals("ohtu2018")) {
+                printCourseStats("https://studies.cs.helsinki.fi/courses/ohtu2018/stats");
+            }
+            if (course.getName().equals("rails2018")) {
+                printCourseStats("https://studies.cs.helsinki.fi/courses/rails2018/stats");
+            }
+        }
+
+    }
+
+    public static void printCourseStats(String url) throws IOException {
+        String ohtuStatsUrl = url;
         String ohtuBodyText = Request.Get(ohtuStatsUrl).execute().returnContent().asString();
         JsonParser parser = new JsonParser();
 
         JsonObject json = parser.parse(ohtuBodyText).getAsJsonObject();
+        Gson mapper = new Gson();
 
         int submissionsTotal = 0;
         int exercisesTotal = 0;
@@ -39,13 +56,14 @@ public class Main {
         for (String key : json.keySet()) {
             submissionsTotal += json.get(key).getAsJsonObject().get("students").getAsInt();
             exercisesTotal += json.get(key).getAsJsonObject().get("exercise_total").getAsInt();
+            Integer[] tunnit = mapper.fromJson(json.get(key).getAsJsonObject().get("hours"), Integer[].class);
+            for (Integer h : tunnit) {
+                if (h != null) {
+                    hours += h;
+                }
+            }
         }
-        System.out.println("opiskelijanumero: " + studentNr + "\n");
-
-        for (Course course : courses) {
-            printCourse(subs, course);
-        }
-
+        System.out.println("kurssilla yhteensä " + submissionsTotal + " palautusta, palautettuja tehtäviä " + exercisesTotal + " kpl, aikaa käytetty yhteensä " + hours + " tuntia");
     }
 
     public static void printCourse(Submission[] subs, Course course) {
